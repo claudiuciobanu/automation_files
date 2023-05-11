@@ -1,0 +1,94 @@
+import time
+
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.select import Select
+
+class CompletareForm():
+    def __init__(self):
+        self.driver_service = Service(executable_path = r'C:\Users\Flow\pythonProject\chromedriver.exe')
+        self.driver = webdriver.Chrome(service = self.driver_service)
+        self.driver.maximize_window()
+        self.driver.get(url = 'https://testpages.herokuapp.com/styled/basic-html-form-test.html')
+        time.sleep(2)
+
+    def introduce_text(self, username, password):
+        field_username = self.driver.find_element(By.XPATH, "//input[@name = 'username']")
+        field_password = self.driver.find_element(By.XPATH, "//input[@name = 'password']")
+        field_username.send_keys(username)
+        time.sleep(2)
+        field_password.send_keys(password)
+        time.sleep(2)
+
+    def clear_text(self, text):
+        text_area = self.driver.find_element(By.XPATH, "//textarea[@name = 'comments']")
+        text_area.clear()
+        text_area.send_keys(text)
+        time.sleep(2)
+
+    def click_checkboxes(self):
+        casute_checkboxes = self.driver.find_elements(By.XPATH, "//input[@type = 'checkbox']")
+        time.sleep(2)
+        for i in casute_checkboxes[:2]:
+            i.click()
+            time.sleep(1)
+
+    def click_radiobuttons(self):
+        self.driver.execute_script("window.scrollBy(0, 400);")
+        last_radio = self.driver.find_element(By.XPATH, "//input[@value = 'rd3']")
+        last_radio.click()
+        time.sleep(1)
+        first_radio = self.driver.find_element(By.XPATH, "//input[@value = 'rd1']")
+        first_radio.click()
+        time.sleep(1)
+
+    def choose_file(self):
+        choose_file_button = self.driver.find_element(By.XPATH, "//input[@name = 'filename']")
+        choose_file_button.send_keys(r"C:\Users\Flow\Downloads\header_dota2.JPG")
+        time.sleep(2)
+
+    def select_multiple_values(self):
+        multiple_values_xpath = self.driver.find_element(By.XPATH, "//select[@name  = 'multipleselect[]']")
+        multiple_values_menu = Select(multiple_values_xpath)
+        multiple_values_menu.select_by_value('ms1')
+        time.sleep(2)
+
+        multiple_values_menu.select_by_index(1)
+        time.sleep(2)
+
+        multiple_values_menu.select_by_visible_text('Selection Item 3')
+        time.sleep(2)
+
+        multiple_values_menu.deselect_all()
+        time.sleep(1)
+
+    def select_dropdown_value(self):
+        buton_dropdown_xpath = self.driver.find_element(By.XPATH, "//select[@name  = 'dropdown']")
+        buton_dropdown_menu = Select(buton_dropdown_xpath)
+        buton_dropdown_menu.select_by_value('dd2')
+        time.sleep(1)
+        buton_dropdown_menu.select_by_visible_text('Drop Down Item 4')
+        time.sleep(1)
+        buton_dropdown_menu.select_by_index(0)
+        time.sleep(1)
+
+    def click_submit(self):
+        buton_submit = self.driver.find_element(By.XPATH, "//input[@value  = 'submit']")
+        buton_submit.click()
+        time.sleep(2)
+
+
+instanta = CompletareForm()
+instanta.introduce_text('asd', 'asdf')
+instanta.clear_text('ceva')
+instanta.click_checkboxes()
+instanta.click_radiobuttons()
+instanta.choose_file()
+instanta.select_multiple_values()
+instanta.select_dropdown_value()
+instanta.click_submit()
+
+
+
+

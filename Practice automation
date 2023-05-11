@@ -1,0 +1,130 @@
+import time
+
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+
+class practice():
+    def __init__(self):
+        self.driver_service = Service(executable_path = r'C:\Users\Flow\pythonProject1\chromedriver.exe')
+        self.driver = webdriver.Chrome(service = self.driver_service)
+        self.driver.maximize_window()
+        self.driver.get("https://www.saucedemo.com/")
+        self.driver.implicitly_wait(15)
+        #time.sleep(2)
+
+    # Login
+    def login(self, username, password):
+        field_username = self.driver.find_element(By.XPATH, "//input[@id = 'user-name']")
+        field_password = self.driver.find_element(By.XPATH, "//input[@id = 'password']")
+        login_btn = self.driver.find_element(By.XPATH, "//input[@class = 'submit-button btn_action']")
+        field_username.send_keys(username)
+       # time.sleep(1)
+        field_password.send_keys(password)
+        #time.sleep(1)
+        login_btn.click()
+        #time.sleep(2)
+
+    # Add products to order
+    def add_all_products(self):
+        product_one = self.driver.find_element(By.XPATH, "//button[@id = 'add-to-cart-sauce-labs-backpack']")
+        product_two = self.driver.find_element(By.XPATH, "//button[@id = 'add-to-cart-sauce-labs-bike-light']")
+        product_three = self.driver.find_element(By.XPATH, "//button[@id = 'add-to-cart-sauce-labs-bolt-t-shirt']")
+        product_four = self.driver.find_element(By.XPATH, "//button[@id = 'add-to-cart-sauce-labs-fleece-jacket']")
+        product_five = self.driver.find_element(By.CSS_SELECTOR, "#add-to-cart-sauce-labs-onesie")
+        product_six = self.driver.find_element(By.XPATH, "//button[@id = 'add-to-cart-test.allthethings()-t-shirt-(red)']")
+
+        product_one.click()
+        #time.sleep(1)
+        product_two.click()
+        #time.sleep(1)
+        product_three.click()
+        #time.sleep(1)
+        product_four.click()
+        #time.sleep(1)
+        self.scroll_down(400)
+        product_five.click()
+        #time.sleep(1)
+        product_six.click()
+        #time.sleep(1)
+        self.scroll_up(-400)
+
+    # Scroll down
+    def scroll_down(self, scroll_down_value):
+        self.driver.execute_script(f'window.scrollBy(0, {scroll_down_value});')
+        #time.sleep(2)
+
+    # Scroll up 
+    def scroll_up(self, scroll_up_value):
+        self.driver.execute_script(f'window.scrollBy(0, {scroll_up_value});')
+        #time.sleep(2)
+    
+    # Click cart
+    def click_products_cart(self):
+        cart_btn = self.driver.find_element(By.XPATH, "//a[@class = 'shopping_cart_link']")
+        cart_btn.click()
+        #time.sleep(2)
+    
+    # Delete product
+    def delete_product(self):
+        delete_product_btn = self.driver.find_element(By.ID, "remove-sauce-labs-fleece-jacket")
+        self.scroll_down(300)
+        delete_product_btn.click()
+        #time.sleep(2)
+    
+    # Click checkout
+    def click_checkout(self):
+        checkout_btn = self.driver.find_element(By.XPATH, "//button[text() = 'Checkout']")
+        self.scroll_down(400)
+        checkout_btn.click()
+        #time.sleep(2)
+    
+    # Add First Name
+    def introduce_first_name(self, first_name_text):
+        first_name_field = self.driver.find_element(By.XPATH, "//input[@name='firstName']")
+        first_name_field.send_keys(first_name_text)
+        #time.sleep(1)
+    
+    # Add Last Name
+    def introduce_last_name(self, last_name_text):
+        last_name_field = self.driver.find_element(By.XPATH, "//input[@placeholder='Last Name']")
+        last_name_field.send_keys(last_name_text)
+        #time.sleep(1)
+    
+    # Add zipcode
+    def zipcode(self, zipcode_value):
+        zipcode_field = self.driver.find_element(By.XPATH, "//input[@placeholder='Zip/Postal Code']")
+        zipcode_field.send_keys(zipcode_value)
+        #time.sleep(2)
+    
+    # Click continue button
+    def click_continue(self):
+        continue_btn = self.driver.find_element(By.XPATH, "//input[@name = 'continue']")
+        continue_btn.click()
+        #time.sleep(2)
+    
+    # Click finish button
+    def click_finish(self):
+        finish_btn = self.driver.find_element(By.CSS_SELECTOR, "#finish")
+        self.scroll_down(700)
+        finish_btn.click()
+        #time.sleep(2)
+    
+    # Click back to home
+    def click_back_to_home(self):
+        back_home_btn = self.driver.find_element(By.CSS_SELECTOR, "#back-to-products")
+        back_home_btn.click()
+        #time.sleep(2)
+
+instance = practice()
+instance.login('standard_user', 'secret_sauce')
+instance.add_all_products()
+instance.click_products_cart()
+instance.delete_product()
+instance.click_checkout()
+instance.introduce_first_name('Claudiu')
+instance.introduce_last_name('Ciobanu')
+instance.zipcode('135200')
+instance.click_continue()
+instance.click_finish()
+instance.click_back_to_home()

@@ -1,0 +1,32 @@
+import time
+
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import *
+
+class tryExcept():
+    def __init__(self):
+        self.driver_service = Service(executable_path = r'C:\Users\Flow\pythonProject1\chromedriver.exe')
+        self.driver = webdriver.Chrome(service = self.driver_service)
+        self.driver.maximize_window()
+        self.driver.get('https://demoqa.com/text-box')
+        time.sleep(1)
+
+    def insert_username(self, username):
+        try:
+            username_field = self.driver.find_element(By.XPATH, "//input[@id = 'userName']")
+            username_field.send_keys(username)
+        except NoSuchElementException:
+            print("Elementul nu a putut fi gasit")
+        except:
+            print('Testul a picat cu o exceptie necunoscuta')
+        else:
+            print("Am intrat in blocul else pentru ca in blocul de try nu am intalnit nicio eroare")
+        finally:
+            print("Am terminat programul")
+
+
+instance = tryExcept()
+instance.insert_username('Claudiu')

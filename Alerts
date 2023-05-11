@@ -1,0 +1,54 @@
+import time
+
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+
+class interactiuniCuAlerte():
+    def __init__(self):
+        self.driver_service = Service(executable_path = r'C:\Users\Flow\pythonProject1\chromedriver.exe')
+        self.driver = webdriver.Chrome(service = self.driver_service)
+        self.driver.maximize_window()
+        self.driver.get('https://demoqa.com/alerts')
+        time.sleep(1)
+
+    def click_first_alert_button(self):
+        first_alert_button = self.driver.find_element(By.XPATH, "//button[@id = 'alertButton']")
+        first_alert_button.click()
+        time.sleep(2)
+        buton_ok_alerta_unu = self.driver.switch_to.alert
+        buton_ok_alerta_unu.accept()
+        time.sleep(2)
+
+    def click_second_alert_button(self):
+        second_alert_button = self.driver.find_element(By.XPATH, "//button[@id = 'timerAlertButton']")
+        second_alert_button.click()
+        time.sleep(7)
+        buton_ok_alerta_doi = self.driver.switch_to.alert
+        buton_ok_alerta_doi.accept()
+        time.sleep(2)
+
+    def click_third_alert_button(self):
+        third_alert_button = self.driver.find_element(By.XPATH, "//button[@id = 'confirmButton']")
+        third_alert_button.click()
+        time.sleep(2)
+        buton_ok_alerta_trei = self.driver.switch_to.alert
+        buton_ok_alerta_trei.dismiss()
+        time.sleep(2)
+
+    def click_fourth_alert_button(self, text_alerta):
+        fourth_alert_button = self.driver.find_element(By.XPATH, "//button[@id = 'promtButton']")
+        fourth_alert_button.click()
+        time.sleep(2)
+        buton_ok_alerta_patru = self.driver.switch_to.alert
+        buton_ok_alerta_patru.send_keys(text_alerta)
+        time.sleep(2)
+        buton_ok_alerta_patru.accept()
+        time.sleep(2)
+
+
+instance = interactiuniCuAlerte()
+instance.click_first_alert_button()
+instance.click_second_alert_button()
+instance.click_third_alert_button()
+instance.click_fourth_alert_button('asdf')

@@ -1,0 +1,97 @@
+import time
+
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+
+class flanco():
+    def __init__(self):
+        self.driver_service = Service(executable_path = r'C:\Users\Flow\pythonProject2\chromedriver.exe') #instantiem clasa service
+        self.driver = webdriver.Chrome(service = self.driver_service)
+        self.driver.maximize_window()
+        self.driver.get("https://www.flanco.ro/")
+        self.driver.implicitly_wait(15)
+
+    # Accept cookies
+    def accept_cookies(self):
+        accept_cookies_btn = self.driver.find_element(By.XPATH, "//a [@class = 'x-agree']")
+        accept_cookies_btn.click()
+
+    # Click "Produse"
+    def click_produse(self):
+        produse_btn = self.driver.find_element(By.XPATH, "//button [@class = 'ammenu-button -hamburger -trigger']")
+        produse_btn.click()
+
+    # Click "Laptop, IT"
+    def click_IT(self):
+        IT_section_btn = self.driver.find_element(By.XPATH, "//figure [@title = 'Toggle item Laptop, IT']")
+        IT_section_btn.click()
+
+    # Click "Memorii Notebook"
+    def click_memorii(self):
+        memorii_section_btn = self.driver.find_element(By.XPATH, "//span [text() = 'Memorii Notebook']")
+        memorii_section_btn.click()
+
+    # Choose price range
+    def choose_price_range(self):
+        price_range_btn = self.driver.find_element(By.XPATH, "//span [text() = '200,']")
+        price_range_btn.click()
+
+    # Choose the type of memory
+    def choose_type_of_memory(self):
+        type_btn = self.driver.find_element(By.XPATH, "//span [contains(text(), 'DDR4')]")
+        type_btn.click()
+
+    # Scroll down method
+    def scroll_down(self, scroll_down_value):
+        self.driver.execute_script(f"window.scrollBy(0, {scroll_down_value});")
+
+    # Choose cheapest product
+    def choose_product(self):
+        self.scroll_down(200)
+        cheapest_prd_btn = self.driver.find_element(By.XPATH, "//button [@title = 'Adauga in cos'][1]")
+        cheapest_prd_btn.click()
+
+    # See products details
+    def click_details(self):
+        details_btn = self.driver.find_element(By.XPATH, "//a [text() = 'Vezi detalii cos'][1]")
+        details_btn.click()
+
+    # Click quantity & update quantity
+    def quantity(self):
+        qty_btn = self.driver.find_element(By.XPATH, "//select [@class = 'updateQty']")
+        qty_btn.click()
+
+        modify_qty = self.driver.find_element(By.XPATH, "//select/option [@value = '4']")
+        modify_qty.click()
+        time.sleep(7)
+
+    # Print total price
+    def total_price(self):
+        total_price = self.driver.find_element(By.XPATH, "//span [@data-bind = 'html: getValue()']")
+        print(total_price.text)
+
+    # Click "Pasul urmator"
+    def next_step(self):
+        pasul_urmator_btn = self.driver.find_element(By.XPATH, "//button [@title = 'Pasul urmator']")
+        pasul_urmator_btn.click()
+
+    # Close Chrome session
+    def close_session(self):
+        self.driver.quit()
+
+
+instance = flanco()
+instance.accept_cookies()
+instance.click_produse()
+instance.click_IT()
+instance.click_memorii()
+instance.choose_price_range()
+instance.choose_type_of_memory()
+instance.choose_product()
+instance.click_details()
+instance.quantity()
+instance.total_price()
+instance.next_step()
+instance.close_session()

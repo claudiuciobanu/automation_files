@@ -1,0 +1,56 @@
+import time
+
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+
+class FacebookInvalidCredTest():
+    def __init__(self):
+        self.driver_service = Service(executable_path = r'C:\Users\Flow\pythonProject2\chromedriver.exe') #instantiem clasa service
+        self.driver = webdriver.Chrome(service = self.driver_service)
+        self.driver.maximize_window()
+        self.driver.get("https://www.facebook.com/")
+        time.sleep(2)
+
+    def accept_cookies(self):
+        cookies_btn = self.driver.find_element(By.XPATH, "//button [@data-cookiebanner = 'accept_button']")
+        cookies_btn.click()
+        time.sleep(2)
+
+    def login_date(self, username, password):
+        field_username = self.driver.find_element(By.CSS_SELECTOR, "#email")
+        field_username.send_keys(username)
+        time.sleep(1)
+        field_password = self.driver.find_element(By.XPATH, "//input[@name = 'pass']")
+        field_password.send_keys(password) #password + Keys.ENTER
+        time.sleep(1)
+        self.click_login()
+        # self.save_screenshot()
+
+
+    def click_login(self):
+        login_btn = self.driver.find_element(By.XPATH, "//button[@name = 'login']")
+        login_btn.click()
+        time.sleep(2)
+        self.take_screenshot_by_time("after_click_login_btn", r"C:\Users\Flow\Desktop\\")
+
+    def click_forgot_password(self):
+        forgot_pass_btn = self.driver.find_element(By.XPATH, "//a [text() = 'Forgot password?']")
+        forgot_pass_btn.click()
+        time.sleep(2)
+        self.take_screenshot_by_time('after_click_forgot_pass', r"C:\Users\Flow\Desktop\\")
+    
+    # save screenshots to desktop
+    def take_screenshot_by_time(self, screenshot_name, path_to_save_ss):
+        screenshot_n = screenshot_name + ".png"
+        destination_of_ss = path_to_save_ss + screenshot_n # path_to_save_ss + "\\" + screenshot_n
+        self.driver.save_screenshot(destination_of_ss)
+        time.sleep(2)
+
+
+
+instance = FacebookInvalidCredTest()
+instance.accept_cookies()
+instance.login_date('gasdyasdpppguai@gmail.com', 'gasdyasdyasooi')
+instance.click_forgot_password()

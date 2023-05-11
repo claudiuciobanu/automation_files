@@ -1,0 +1,35 @@
+import time
+
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+
+class schimbare_fereastra():
+    def __init__(self):
+        self.driver_service = Service(executable_path = r'C:\Users\Flow\pythonProject1\chromedriver.exe')
+        self.driver = webdriver.Chrome(service = self.driver_service)
+        self.driver.maximize_window()
+        self.driver.get('https://demoqa.com/browser-windows')
+        time.sleep(1)
+
+    def click_new_tab(self):
+        buton_new_tab = self.driver.find_element(By.XPATH, "//button[@id = 'tabButton']")
+        buton_new_tab.click()
+        time.sleep(2)
+        
+    def switch_window(self):
+        handles = self.driver.window_handles
+        self.driver.switch_to.window(handles[1])
+
+    def new_tab_text(self):
+        inside_text = self.driver.find_element(By.XPATH, "//h1[@id = 'sampleHeading']")
+        #inside_text = self.driver.find_element(By.ID, "sampleHeading") # identificare dupa id
+        #inside_text = self.driver.find_element(By.CSS_SELECTOR, "#sampleHeading" ) # dupa CSS
+        print(inside_text.text) # .text -> este proprietate, nu metoda
+
+
+
+instance = schimbare_fereastra()
+instance.click_new_tab()
+instance.switch_window()
+instance.new_tab_text()

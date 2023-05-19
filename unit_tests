@@ -1,0 +1,28 @@
+import unittest
+
+def calculate_x_power_of_y(x, y):
+    return x ** y
+
+class TestCalculateXY(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        print("This method gets execute once a time before tests will be run")
+
+    def setUp(self):
+        print("This method is called the first one for each test")
+
+    def test_calculate_power(self):
+        print("First test")
+        self.assertEqual(calculate_x_power_of_y(2, 6), 64, "The values are not equal")
+
+    def test_calculate_not_equal(self):
+        print("Second test")
+        self.assertNotEqual(calculate_x_power_of_y(3, 3), 28)
+
+    def tearDown(self):
+        print("This method is executed everytime at the final of a test")
+
+    @classmethod
+    def tearDownClass(cls):
+        print("Suit of the tests have been finished")

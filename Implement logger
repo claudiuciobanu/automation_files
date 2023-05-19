@@ -1,0 +1,24 @@
+import logging
+
+class Logger():
+    def __init__(self):
+        # define the name of the logger
+        self.logger = logging.getLogger(Logger.__name__)
+        # set the level of the messages that will be display
+        self.logger.setLevel(logging.INFO)
+
+        # after the object was created, set the handle for the logger
+        self.console_handler = logging.StreamHandler()
+
+        # for the handler created, set the level of the messages that will be display
+        self.console_handler.setLevel(logging.INFO)
+
+        # set the display mode for the messages
+        formatter = logging.Formatter ("%(asctime)s -> %(message)s -> %(levelname)s")
+
+        # add the handler into the console for our logger
+        self.logger.addHandler(self.console_handler)
+
+        self.logger.info("Info message")
+
+instance = Logger()

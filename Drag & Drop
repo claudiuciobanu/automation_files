@@ -1,0 +1,29 @@
+import time
+
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver import ActionChains
+
+class DragAndDrop():
+
+    def __init__(self):
+        self.driver_service = Service(executable_path = r"C:\Users\Flow\pythonProject3\chromedriver.exe")
+        self.driver = webdriver.Chrome(service = self.driver_service)
+        self.driver.maximize_window()
+        self.driver.get("https://jqueryui.com/droppable/")
+        time.sleep(3)
+
+    def switch_iframe(self):
+        self.driver.switch_to.frame(0)
+
+    def drag_and_drop_test(self):
+        self.switch_iframe()
+        source_elem = self.driver.find_element(By.XPATH, "//div [@id = 'draggable']")
+        target_elem = self.driver.find_element(By.XPATH, "//div [@id = 'droppable']")
+        actions = ActionChains(self.driver)
+        actions.drag_and_drop(source_elem, target_elem).perform()
+        time.sleep(3)
+
+instance = DragAndDrop()
+instance.drag_and_drop_test()
